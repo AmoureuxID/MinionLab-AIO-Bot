@@ -300,7 +300,7 @@ async function main() {
 `));
 
   const accounts = fs
-    .readFileSync("reff_account.txt", "utf8")
+    .readFileSync("reff_accounts.txt", "utf8")
     .split("\n")
     .filter(Boolean);
   const count = accounts.length;
