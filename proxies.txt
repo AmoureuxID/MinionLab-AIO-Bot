@@ -1,3 +1,0 @@
-http://user:pass@ip:port
-https://ip:port
-socks5://user:pass@ip:port
