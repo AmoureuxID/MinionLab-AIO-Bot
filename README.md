@@ -1,25 +1,26 @@
-# MinionLab Referral Bot
+# MinionLab AIO Bot
 
-A simple Node.js bot designed by **AmoureuxID** to automate the MinionLab waitlist referral registration process. This script allows you to generate mass referrals automatically with proxy support, email verification, and easy logging.
+A complete Node.js automation suite by **AmoureuxID** for MinionLab waitlist farming, airdrop, and referral management.  
+Supports main account farming, mass referral generation (autoreff), proxy rotation, and a user-friendly CLI menu.
 
 ---
 
 ## 🚀 Features
 
-- **Email Automation**  
-  Generates a temporary email address using the Guerrilla Mail API for each referral registration.
-- **Automated MinionLab Registration**  
-  Registers a new account with your provided MinionLab referral code.
-- **Automatic Email Verification**  
-  Fetches the verification code from the temporary inbox and verifies the account automatically.
+- **Main Account Point Farming**  
+  Automate point checking and farming for your main MinionLab account (`node_main.js`).
+- **Reff Account Management**  
+  Run node farming for referral accounts with one click (`node_reff.js`).
+- **Autoreff (Referral Generator)**  
+  Automatically create new MinionLab accounts with your referral code and verify via GuerrillaMail (`autoreff.js`).
+- **Auto Refcode Fetch**  
+  Fetch referral code from your main account automatically using your credentials.
 - **Proxy Support**  
-  Supports HTTP, HTTPS, and SOCKS5 proxies loaded from proxies.txt for each run.
-- **Mass Referrals**  
-  Runs the entire process in a loop for as many referrals as you want—fully hands-off.
+  Supports HTTP, HTTPS, and SOCKS5 proxies via `proxies.txt`.
+- **Interactive AIO CLI**  
+  Simple menu system (`index.js`) for all bot operations—no need to remember commands.
 - **Logging to File**  
-  Saves each successful referral account (email:password) into `reff_accounts.txt`.
-- **Simple CLI Interface**  
-  No complicated config files. All interaction is via an easy-to-use command-line interface.
+  All generated accounts and credentials saved to `reff_accounts.txt`.
 
 ---
 
@@ -27,7 +28,8 @@ A simple Node.js bot designed by **AmoureuxID** to automate the MinionLab waitli
 
 ### 1. Get Your MinionLab Referral Code
 
-If you don't have an account yet, register to get your referral code.  
+You can get your refcode from the app or let this bot fetch it automatically from your main account.
+
 👉 **[Go to MinionLab](https://app.minionlab.ai/index?referralCode=KnwHCFzS)**
 
 ### 2. Join the AmoureuxID Community
@@ -47,50 +49,66 @@ For updates, tips, and airdrop info:
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/AmoureuxID/MinionLab-Autoreff.git
-cd MinionLab-Autoreff
+git clone https://github.com/AmoureuxID/MinionLab-AIO-Bot.git
+cd MinionLab-AIO-Bot
 npm install
 ```
 
 ### 2. Proxy Configuration (Optional)
 
-If you want to use proxies, create a file named `proxies.txt` in the project directory.  
-Format per line:  
+Add a `proxies.txt` file for proxy rotation. Supported formats per line:
 ```
 http://user:pass@ip:port
 https://ip:port
 socks5://user:pass@ip:port
 ```
-If not provided, the bot uses your default IP.
+If not provided, the bot will use your default IP.
 
 ---
 
 ## 🖥️ Usage
 
-Start the bot with:
+Start the CLI menu with:
 
 ```bash
 node index.js
 ```
 
-**Bot flow in the terminal:**
+**Menu Example:**
+```
+╔══════════════════════════════════════════════════╗
+║         MinionLab AIO Bot - AmoureuxID           ║
+╚══════════════════════════════════════════════════╝
 
-- Enter your MinionLab referral code when prompted.
-- Enter the number of referrals you want to generate.
-- The bot will handle registration and email verification for each referral account.
-- Each successful account is saved to `reff_accounts.txt` as `email:password`.
+[1] Run Node Main Account      -> Runs node_main.js  
+[2] Run Node Reff Accounts     -> Runs node_reff.js  
+[3] Autoreff for Main Account  -> Get refcode by login  
+[4] Autoreff input code        -> Manually input referral code for autoreff  
+[0] Exit
+```
+
+- **[1]** Run farming bot for your main account (email:password in `main_account.txt`).
+- **[2]** Run farming bot for your referral accounts (`reff_accounts.txt`).
+- **[3]** Autoreff using your main account's refcode (auto-fetched).
+- **[4]** Autoreff with manual refcode input.
+
+All successful accounts are saved to `reff_accounts.txt` as `email:password`.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-minionlab-autoreff/
-├── index.js           # Main bot script
-├── package.json       # Project dependencies
+MinionLab-AIO-Bot/
+├── index.js           # Main CLI menu & controller
+├── node_main.js       # Main account farming logic
+├── node_reff.js       # Reff account farming logic
+├── autoreff.js        # Automated referral generator
+├── package.json       # Dependencies
 ├── proxies.txt        # (optional) Proxy list
-├── reff_accounts.txt  # Output of generated accounts
-└── README.md          # This documentation file
+├── main_account.txt   # Your main MinionLab account (email:password)
+├── reff_accounts.txt  # Output of generated referral accounts
+└── README.md          # This file
 ```
 
 ---
@@ -99,7 +117,7 @@ minionlab-autoreff/
 
 - **For educational purposes only!** Use at your own risk.
 - **Respect platform limitations & ToS.** The bot includes delays between actions, but use responsibly.
-- **If failures occur:** Check your internet connection, proxy reliability, and try again. Third-party APIs (Guerrilla Mail, MinionLab) may be down or have changed endpoints.
+- **If failures occur:** Check your internet, proxies, or dependencies. Third-party APIs may be down or have changed endpoints.
 
 ---
 
@@ -109,10 +127,10 @@ minionlab-autoreff/
   Guerrilla Mail API may be down or temporarily blocking your IP. Try again later or use a VPN/proxy.
 
 - **"No email received!"**  
-  MinionLab's email may be delayed. Try increasing the `DELAY_SECONDS` value in `index.js` (e.g., set to 30 seconds).
+  MinionLab's email may be delayed. Try increasing the `DELAY_SECONDS` value in `autoreff.js` (e.g., set to 30 seconds).
 
 - **"Want more debug info?"**  
-  Set `DEBUG_MODE` to `true` in the config section of `index.js` to see full JSON responses.
+  Set `DEBUG_MODE` to `true` in `autoreff.js` to see full JSON responses.
 
 ---
 
